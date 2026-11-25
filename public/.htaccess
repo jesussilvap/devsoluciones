@@ -1,0 +1,28 @@
+# Configuración optimizada para Hostinger (LiteSpeed / Apache) - devsoluciones.com
+RewriteEngine On
+
+# Forzar HTTPS y dominio canónico sin www (https://devsoluciones.com)
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\.devsoluciones\.com$ [NC]
+RewriteRule ^(.*)$ https://devsoluciones.com/$1 [L,R=301]
+
+# Página de error 404 personalizada generada por Astro
+ErrorDocument 404 /404.html
+
+# Caché agresivo para assets con hash de Astro y caché corto para HTML
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

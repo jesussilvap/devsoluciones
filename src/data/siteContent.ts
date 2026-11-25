@@ -54,8 +54,8 @@ export const siteInfo = {
   tagline: 'Ingeniería de software, experiencias digitales e Inteligencia Artificial para escalar tu negocio.',
   description:
     'En DevSoluciones desarrollamos software a la medida, aplicaciones móviles para Apple y Android, tiendas virtuales, sitios web, landing pages, marketing digital, asesorías y capacitaciones en IA, y automatizaciones de procesos.',
-  siteUrl: 'https://devsoluciones.co',
-  email: 'contacto@devsoluciones.co',
+  siteUrl: 'https://devsoluciones.com',
+  email: 'contacto@devsoluciones.com',
   location: 'Colombia · Atención remota en toda Latinoamérica',
   /** Número en formato internacional sin signos ni espacios (ej. 573001234567) */
   whatsappNumber: '573000000000',
