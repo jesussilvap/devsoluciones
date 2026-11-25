@@ -1,0 +1,145 @@
+---
+import { siteInfo, navLinks } from '../data/siteContent';
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-line bg-page/95 shadow-[0_1px_10px_rgb(0_0_0/0.04)] backdrop-blur-md print:hidden"
+>
+  <div class="mx-auto flex h-15 max-w-6xl items-center gap-3 px-4 sm:px-8 lg:h-16">
+    <a
+      href="#inicio"
+      aria-label={`${siteInfo.brand} - Ir al inicio`}
+      class="group flex shrink-0 items-center gap-2.5 no-underline"
+    >
+      <span
+        class="grid size-9 place-items-center rounded-xl bg-accent font-serif text-[15px] font-bold text-on-accent transition-transform duration-150 group-hover:scale-105"
+      >
+        {siteInfo.shortMark}
+      </span>
+      <span class="font-serif text-lg font-bold tracking-tight text-ink">
+        Dev<span class="text-accent">Soluciones</span>
+      </span>
+    </a>
+
+    <nav aria-label="Navegación principal" class="hidden flex-1 justify-center gap-1 lg:flex">
+      {
+        navLinks.map((item) => (
+          <a href={item.href} data-nav class="nav-link">
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <span class="flex-1 lg:hidden"></span>
+
+    <button
+      id="themeToggle"
+      type="button"
+      class="icon-btn"
+      aria-label="Cambiar tema claro u oscuro"
+      title="Cambiar tema claro/oscuro"
+    >
+      <svg
+        id="iconMoon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        class="size-4.5 fill-none stroke-current stroke-[1.8]"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"></path>
+      </svg>
+      <svg
+        id="iconSun"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        class="hidden size-4.5 fill-none stroke-current stroke-[1.8]"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"></path>
+      </svg>
+    </button>
+
+    <a href="#contacto" class="btn-primary !px-3.5 !py-2 !text-sm">
+      Cotizar
+    </a>
+  </div>
+
+  <!-- Navegación móvil deslizable horizontalmente (misma fluidez que jesussilvap.github.io) -->
+  <nav
+    id="mobileNav"
+    aria-label="Secciones en móvil"
+    class="flex gap-1 overflow-x-auto border-t border-line px-3 py-2 [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden"
+  >
+    {
+      navLinks.map((item) => (
+        <a href={item.href} data-nav class="nav-link shrink-0">
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>
+
+<script>
+  const themeBtn = document.getElementById('themeToggle');
+  const iconMoon = document.getElementById('iconMoon');
+  const iconSun = document.getElementById('iconSun');
+
+  function syncThemeIcons() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    iconMoon?.classList.toggle('hidden', isDark);
+    iconSun?.classList.toggle('hidden', !isDark);
+  }
+
+  syncThemeIcons();
+
+  themeBtn?.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+    syncThemeIcons();
+  });
+
+  // Scroll spy para resaltar la sección activa en el navbar
+  const navAnchors = Array.from(document.querySelectorAll<HTMLAnchorElement>('a[data-nav]'));
+  const sectionIds = Array.from(
+    new Set(navAnchors.map((a) => a.getAttribute('href')?.replace('#', '')).filter(Boolean))
+  ) as string[];
+
+  const sections = sectionIds
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => el !== null);
+
+  if (sections.length > 0) {
+    const setActive = (id: string) => {
+      navAnchors.forEach((link) => {
+        const match = link.getAttribute('href') === `#${id}`;
+        link.classList.toggle('is-active', match);
+        if (match && link.parentElement?.id === 'mobileNav') {
+          link.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]?.target?.id) {
+          setActive(visible[0].target.id);
+        }
+      },
+      { rootMargin: '-28% 0px -58% 0px', threshold: [0.1, 0.35, 0.6] }
+    );
+
+    sections.forEach((sec) => observer.observe(sec));
+  }
+</script>

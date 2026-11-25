@@ -1,0 +1,133 @@
+---
+import { siteInfo, heroStats, getWhatsAppUrl } from '../data/siteContent';
+import SocialLinks from './SocialLinks.astro';
+---
+
+<section id="inicio" class="hero-grid relative overflow-hidden border-b border-line py-16 lg:py-24">
+  <div class="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-8 lg:grid-cols-12">
+    <!-- Columna principal -->
+    <div class="lg:col-span-7">
+      <div class="mb-5 flex flex-wrap items-center gap-2.5">
+        <span class="eyebrow">
+          <span class="size-2 rounded-full bg-accent"></span>
+          {siteInfo.brand} · Ingeniería &amp; Soluciones Digitales
+        </span>
+        <span class="eyebrow-gold">IA + Automatizaciones</span>
+      </div>
+
+      <h1 class="font-serif text-4xl leading-[1.12] font-bold tracking-tight text-ink sm:text-5xl lg:text-[3.35rem]">
+        Software a la medida, apps y <span class="text-accent">soluciones con IA</span> que impulsan tus ventas.
+      </h1>
+
+      <p class="mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+        Construimos aplicaciones para <strong>Apple y Android</strong>, <strong>tiendas virtuales</strong>,
+        <strong>sitios web</strong>, <strong>landing pages</strong>, campañas de <strong>marketing digital</strong>,
+        <strong>automatizaciones</strong> y <strong>asesorías y capacitaciones en Inteligencia Artificial</strong>
+        adaptadas a tu operación.
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-3.5">
+        <a href="#contacto" class="btn-primary">
+          Solicitar cotización gratuita
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            class="size-4 fill-none stroke-current stroke-[2.2]"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6"></path>
+          </svg>
+        </a>
+
+        <a
+          href={getWhatsAppUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-secondary"
+        >
+          Hablar por WhatsApp
+        </a>
+
+        <a
+          href="#servicios"
+          class="inline-flex items-center gap-1.5 px-2 py-2 text-sm font-semibold text-accent transition-colors hover:text-accent-ink"
+        >
+          Ver 8 servicios
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <!-- Métricas rápidas -->
+      <dl class="mt-10 grid grid-cols-1 gap-4 border-t border-line pt-6 sm:grid-cols-3">
+        {
+          heroStats.map((stat) => (
+            <div>
+              <dt class="font-serif text-2xl font-bold text-ink">{stat.value}</dt>
+              <dd class="mt-0.5 text-sm text-muted">{stat.label}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <!-- Redes sociales rápidas -->
+      <div class="mt-7 flex flex-wrap items-center gap-3">
+        <span class="text-xs font-semibold tracking-wider text-muted uppercase">Conecta con nosotros:</span>
+        <SocialLinks />
+      </div>
+    </div>
+
+    <!-- Tarjeta visual de arquitectura integral -->
+    <div class="lg:col-span-5">
+      <div class="card relative overflow-hidden p-6 shadow-xl shadow-black/5">
+        <div class="mb-5 flex items-center justify-between border-b border-line pb-4">
+          <div class="flex items-center gap-2">
+            <span class="size-2.5 rounded-full bg-accent"></span>
+            <span class="size-2.5 rounded-full bg-gold"></span>
+            <span class="size-2.5 rounded-full bg-line"></span>
+          </div>
+          <span class="font-mono text-xs text-muted">ecosistema.devsoluciones</span>
+        </div>
+
+        <p class="font-serif text-xl font-bold text-ink">Un solo aliado tecnológico</p>
+        <p class="mt-1 text-sm text-muted">
+          Desde tu primera landing page hasta software empresarial y agentes de IA.
+        </p>
+
+        <div class="mt-5 space-y-3">
+          <div class="rounded-xl border border-line bg-page-alt p-3.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold tracking-wider text-accent uppercase">01 · Producto Digital</span>
+              <span class="rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-medium text-accent-ink">A medida</span>
+            </div>
+            <p class="mt-1.5 text-sm font-semibold text-ink">Software empresarial + Apps iOS / Android</p>
+            <p class="mt-0.5 text-xs text-muted">Arquitectura limpia, APIs seguras y publicación en tiendas.</p>
+          </div>
+
+          <div class="rounded-xl border border-line bg-page-alt p-3.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold tracking-wider text-accent uppercase">02 · Ventas Online</span>
+              <span class="rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-medium text-accent-ink">Conversión</span>
+            </div>
+            <p class="mt-1.5 text-sm font-semibold text-ink">Tiendas virtuales, sitios web y landing pages</p>
+            <p class="mt-0.5 text-xs text-muted">SEO técnico, pagos en línea y campañas de marketing digital.</p>
+          </div>
+
+          <div class="rounded-xl border border-gold/40 bg-gold-soft/50 p-3.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold tracking-wider text-gold uppercase">03 · Eficiencia IA</span>
+              <span class="rounded-full bg-gold-soft px-2.5 py-0.5 text-xs font-medium text-gold">24/7</span>
+            </div>
+            <p class="mt-1.5 text-sm font-semibold text-ink">Asesorías, capacitaciones IA y automatizaciones</p>
+            <p class="mt-0.5 text-xs text-muted">Flujos automáticos con WhatsApp, CRM y formación práctica.</p>
+          </div>
+        </div>
+
+        <div class="mt-5 flex items-center justify-between border-t border-line pt-4 text-xs text-muted">
+          <span>Diagnóstico inicial sin costo</span>
+          <a href="#contacto" class="font-semibold text-accent hover:underline">Agendar ahora →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

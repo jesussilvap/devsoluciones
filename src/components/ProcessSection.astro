@@ -1,0 +1,29 @@
+---
+import { processSteps } from '../data/siteContent';
+---
+
+<section id="proceso" class="py-16 lg:py-24">
+  <div class="mx-auto max-w-6xl px-4 sm:px-8">
+    <div class="max-w-3xl">
+      <span class="eyebrow mb-3">Metodología transparente</span>
+      <h2 class="section-heading text-3xl sm:text-4xl">Cómo trabajamos</h2>
+      <p class="mt-3 text-base text-muted sm:text-lg">
+        Un proceso claro de principio a fin, con comunicación directa y entregables visibles en cada etapa.
+      </p>
+    </div>
+
+    <ol class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        processSteps.map((step) => (
+          <li class="card relative flex flex-col">
+            <span class="inline-flex w-fit rounded-lg bg-accent-soft px-2.5 py-1 font-mono text-xs font-bold text-accent-ink">
+              Paso {step.number}
+            </span>
+            <h3 class="mt-4 font-serif text-lg font-bold text-ink">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{step.description}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

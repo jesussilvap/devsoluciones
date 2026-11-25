@@ -1,0 +1,287 @@
+---
+import { siteInfo, services, getWhatsAppUrl } from '../data/siteContent';
+import SocialLinks from './SocialLinks.astro';
+---
+
+<section id="contacto" class="py-16 lg:py-24">
+  <div class="mx-auto max-w-6xl px-4 sm:px-8">
+    <div class="max-w-3xl">
+      <span class="eyebrow mb-3">Hablemos de tu proyecto</span>
+      <h2 class="section-heading text-3xl sm:text-4xl">Solicita tu cotización</h2>
+      <p class="mt-3 text-base text-muted sm:text-lg">
+        Cuéntanos qué necesitas construir o automatizar. Te responderemos con una propuesta clara y sin compromiso.
+      </p>
+    </div>
+
+    <div class="mt-10 grid gap-8 lg:grid-cols-12">
+      <!-- Formulario inteligente -->
+      <div class="card lg:col-span-7">
+        <form
+          id="quoteForm"
+          data-whatsapp-number={siteInfo.whatsappNumber}
+          data-form-endpoint={siteInfo.formEndpoint}
+          class="space-y-5"
+          novalidate
+        >
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="name" class="block text-sm font-medium text-ink">
+                Nombre completo <span class="text-accent">*</span>
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                placeholder="Ej. Laura Gómez"
+                class="mt-1.5 w-full rounded-xl border border-line bg-page px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/70 focus:border-accent focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label for="company" class="block text-sm font-medium text-ink">
+                Empresa o emprendimiento
+              </label>
+              <input
+                id="company"
+                name="company"
+                type="text"
+                placeholder="Ej. Comercializadora del Sur"
+                class="mt-1.5 w-full rounded-xl border border-line bg-page px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/70 focus:border-accent focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="email" class="block text-sm font-medium text-ink">
+                Correo electrónico <span class="text-accent">*</span>
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="tu@empresa.com"
+                class="mt-1.5 w-full rounded-xl border border-line bg-page px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/70 focus:border-accent focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label for="phone" class="block text-sm font-medium text-ink">
+                WhatsApp / Teléfono <span class="text-accent">*</span>
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                required
+                placeholder="+57 300 000 0000"
+                class="mt-1.5 w-full rounded-xl border border-line bg-page px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/70 focus:border-accent focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <fieldset>
+            <legend class="text-sm font-medium text-ink">
+              ¿Qué servicio(s) te interesan? <span class="text-accent">*</span>
+            </legend>
+            <div class="mt-2.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {
+                services.map((service) => (
+                  <label class="flex cursor-pointer items-center gap-2.5 rounded-xl border border-line bg-page px-3 py-2 text-sm text-ink transition-colors hover:border-accent/60 has-[:checked]:border-accent has-[:checked]:bg-accent-soft has-[:checked]:text-accent-ink">
+                    <input
+                      type="checkbox"
+                      name="services"
+                      value={service.title}
+                      class="size-4 accent-accent"
+                    />
+                    <span class="font-medium">{service.title}</span>
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+
+          <div>
+            <label for="message" class="block text-sm font-medium text-ink">
+              Cuéntanos brevemente tu idea u objetivo <span class="text-accent">*</span>
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+              placeholder="Ej. Necesitamos una tienda virtual integrada con pagos locales y automatizar la atención inicial por WhatsApp con IA..."
+              class="mt-1.5 w-full rounded-xl border border-line bg-page px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/70 focus:border-accent focus:outline-none"
+            ></textarea>
+          </div>
+
+          <div id="formFeedback" class="hidden rounded-xl border p-3.5 text-sm" role="status" aria-live="polite"></div>
+
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <button type="submit" class="btn-primary">
+              Enviar solicitud por WhatsApp
+            </button>
+            <span class="text-xs text-muted">
+              También puedes escribirnos directo por correo o redes sociales.
+            </span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Canales directos y redes -->
+      <aside class="flex flex-col justify-between gap-6 lg:col-span-5">
+        <div class="card space-y-5">
+          <div>
+            <span class="eyebrow-gold">Atención directa</span>
+            <h3 class="mt-3 font-serif text-2xl font-bold text-ink">Canales de {siteInfo.brand}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">
+              ¿Prefieres una conversación rápida? Escríbenos directamente y agendamos una llamada de diagnóstico.
+            </p>
+          </div>
+
+          <div class="space-y-3 border-t border-line pt-4 text-sm">
+            <div class="flex items-start justify-between gap-3">
+              <span class="text-muted">WhatsApp</span>
+              <a
+                href={getWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-semibold text-accent hover:underline"
+              >
+                {siteInfo.whatsappDisplay}
+              </a>
+            </div>
+            <div class="flex items-start justify-between gap-3">
+              <span class="text-muted">Correo</span>
+              <a href={`mailto:${siteInfo.email}`} class="font-semibold text-accent hover:underline">
+                {siteInfo.email}
+              </a>
+            </div>
+            <div class="flex items-start justify-between gap-3">
+              <span class="text-muted">Cobertura</span>
+              <span class="text-right font-medium text-ink">{siteInfo.location}</span>
+            </div>
+          </div>
+
+          <div class="border-t border-line pt-4">
+            <p class="mb-3 text-xs font-semibold tracking-wider text-muted uppercase">
+              Síguenos o escríbenos en redes
+            </p>
+            <SocialLinks showLabels={true} />
+          </div>
+        </div>
+
+        <div class="card border-accent/30 bg-accent-soft/45">
+          <p class="font-serif text-lg font-bold text-ink">Diagnóstico inicial sin costo</p>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted">
+            Revisamos tu idea de software, tienda virtual o automatización con IA y te entregamos una
+            recomendación clara de tecnología, fases e inversión estimada.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('quoteForm') as HTMLFormElement | null;
+  const feedback = document.getElementById('formFeedback');
+
+  function showFeedback(type: 'error' | 'success', html: string) {
+    if (!feedback) return;
+    feedback.classList.remove(
+      'hidden',
+      'border-red-500/40',
+      'bg-red-500/10',
+      'text-red-700',
+      'dark:text-red-300',
+      'border-accent/40',
+      'bg-accent-soft',
+      'text-accent-ink'
+    );
+
+    if (type === 'error') {
+      feedback.classList.add('border-red-500/40', 'bg-red-500/10', 'text-red-700');
+    } else {
+      feedback.classList.add('border-accent/40', 'bg-accent-soft', 'text-accent-ink');
+    }
+    feedback.innerHTML = html;
+  }
+
+  // Escucha selección desde las tarjetas de servicio o modalidades
+  window.addEventListener('devsoluciones:select-service', (event) => {
+    const customEvent = event as CustomEvent<string>;
+    const serviceName = customEvent.detail;
+    if (!form || !serviceName) return;
+
+    const checkbox = form.querySelector<HTMLInputElement>(
+      `input[name="services"][value="${CSS.escape(serviceName)}"]`
+    );
+    if (checkbox) {
+      checkbox.checked = true;
+    }
+    const nameInput = form.querySelector<HTMLInputElement>('#name');
+    setTimeout(() => nameInput?.focus({ preventScroll: true }), 400);
+  });
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const name = String(formData.get('name') ?? '').trim();
+    const company = String(formData.get('company') ?? '').trim();
+    const email = String(formData.get('email') ?? '').trim();
+    const phone = String(formData.get('phone') ?? '').trim();
+    const message = String(formData.get('message') ?? '').trim();
+    const selectedServices = formData.getAll('services').map(String);
+
+    if (!name || !email || !phone || !message || selectedServices.length === 0) {
+      showFeedback(
+        'error',
+        'Por favor completa los campos obligatorios y selecciona al menos un servicio de interés.'
+      );
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      showFeedback('error', 'Por favor ingresa un correo electrónico válido.');
+      return;
+    }
+
+    const endpoint = form.dataset.formEndpoint?.trim();
+    if (endpoint) {
+      try {
+        await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ name, company, email, phone, services: selectedServices, message }),
+        });
+      } catch {
+        // Continúa con el enlace directo a WhatsApp como respaldo confiable
+      }
+    }
+
+    const whatsappNumber = form.dataset.whatsappNumber ?? '573000000000';
+    const summaryLines = [
+      'Hola DevSoluciones, quiero solicitar una cotización:',
+      `• Nombre: ${name}`,
+      company ? `• Empresa: ${company}` : null,
+      `• Correo: ${email}`,
+      `• Teléfono: ${phone}`,
+      `• Servicios: ${selectedServices.join(', ')}`,
+      `• Detalles: ${message}`,
+    ].filter(Boolean);
+
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(summaryLines.join('\n'))}`;
+
+    showFeedback(
+      'success',
+      `<strong>¡Solicitud lista!</strong> Hemos preparado tu resumen para WhatsApp. <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="underline font-semibold">Haz clic aquí si no se abrió automáticamente →</a>`
+    );
+
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  });
+</script>

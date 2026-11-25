@@ -1,0 +1,81 @@
+---
+import '../styles/global.css';
+import { siteInfo, services } from '../data/siteContent';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${siteInfo.brand} · Software a la medida, Apps, Web, IA y Automatizaciones`,
+  description = siteInfo.description,
+} = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteInfo.brand,
+  description: siteInfo.description,
+  url: siteInfo.siteUrl,
+  email: siteInfo.email,
+  sameAs: [siteInfo.social.facebook, siteInfo.social.instagram],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: `Servicios de ${siteInfo.brand}`,
+    itemListElement: services.map((service) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: service.title,
+        description: service.summary,
+      },
+    })),
+  },
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CO" />
+    <meta name="theme-color" content="#1d4ea8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      // Aplica el tema antes de pintar para evitar parpadeo (mismo patrón que jesussilvap.github.io)
+      (function () {
+        var t;
+        try {
+          t = localStorage.getItem('theme');
+        } catch (e) {}
+        if (!t) {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-lg focus:bg-accent focus:px-3 focus:py-2 focus:text-on-accent"
+    >
+      Saltar al contenido
+    </a>
+    <slot />
+  </body>
+</html>
